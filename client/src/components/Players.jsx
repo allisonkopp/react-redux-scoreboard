@@ -4,7 +4,7 @@ import { Player } from '.';
 const Players = ({ players = [] }) => (
   <div className="players">
     {players.map(player => (
-      <Player />
+      <Player player={player} />
     ))}
   </div>
 );

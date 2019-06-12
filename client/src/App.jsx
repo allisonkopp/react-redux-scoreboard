@@ -1,36 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Players, Header, Form, PlayerDetails } from './components';
-import { SET_NAME } from './store/actionTypes';
+
 class App extends Component {
-  handleClick = _ => {
-    // const { dispatch } = this.props;
-    // dispatch({ type: SET_NAME, payload: 'foobar' });
-    const { setName } = this.props;
-    setName('hello world');
-  };
   render() {
-    console.log('APP', this.props);
+    const { players = [], selectedPlayerId } = this.props;
+    const selectedPlayer = players.find(player => player.id === selectedPlayerId);
     return (
       <div className="scoreboard">
-        <button onClick={this.handleClick}>CLICK ME</button>
-        <h1>{this.props.notes.name}</h1>
-        <Header />
-        <Players />
+        <Header players={players} />
+        <Players players={players} />
         <Form />
-        <PlayerDetails />
+        <PlayerDetails selectedPlayer={selectedPlayer} />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ notes }) => ({ notes });
-const mapDispatchToProps = dispatch => ({
-  setName: payload => dispatch({ type: SET_NAME, payload })
-});
+const mapStateToProps = ({ player }) => ({ ...player });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
-//dispatch
+export default connect(mapStateToProps)(App);

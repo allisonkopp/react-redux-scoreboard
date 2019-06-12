@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { ADD_PLAYER } from '../store/actionTypes';
 
 class Form extends Component {
   state = { name: String(), age: String() };
@@ -6,8 +8,10 @@ class Form extends Component {
   handleInputChange = field => e => this.setState({ [field]: e.target.value });
 
   handleSubmit = e => {
+    const { addPlayer } = this.props;
     e.preventDefault();
     this.setState({ name: String(), age: String() });
+    addPlayer(this.state);
   };
 
   render() {
@@ -24,4 +28,11 @@ class Form extends Component {
   }
 }
 
-export default Form;
+const mapDispatchToProps = dispatch => ({
+  addPlayer: payload => dispatch({ type: ADD_PLAYER, payload })
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Form);
